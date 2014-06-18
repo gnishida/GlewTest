@@ -6,6 +6,7 @@ uint RenderManager::init() {
  
     vertexLoc = glGetAttribLocation(program, "position");
     colorLoc = glGetAttribLocation(program, "color");
+    normalLoc = glGetAttribLocation(program, "normal");
   
 	glUseProgram(program);
 
@@ -19,48 +20,6 @@ void RenderManager::render() {
 		glBindVertexArray(vao_list[i].vao);
 		glDrawArrays(vao_list[i].mode, 0, vao_list[i].count);
 	}
-}
-
-void RenderManager::setup() {
-	// add two triangles
-	std::vector<Vertex> points;
-	Vertex v;
-	v.location[0] = -3.0f; v.location[1] = 0.0f; v.location[2] = -5.0f;
-	v.color[0] = 0.0f; v.color[1] = 0.0f; v.color[2] = 1.0f;
-	points.push_back(v);
-	v.location[0] = -1.0f; v.location[1] = 0.0f; v.location[2] = -5.0f;
-	points.push_back(v);
-	v.location[0] = -2.0f; v.location[1] = 2.0f; v.location[2] = -5.0f;
-	points.push_back(v);
-
-	v.location[0] = 1.0f; v.location[1] = 0.0f; v.location[2] = -5.0f;
-	v.color[0] = 1.0f; v.color[1] = 0.0f; v.color[2] = 0.0f;
-	points.push_back(v);
-	v.location[0] = 3.0f; v.location[1] = 0.0f; v.location[2] = -5.0f;
-	points.push_back(v);
-	v.location[0] = 2.0f; v.location[1] = 2.0f; v.location[2] = -5.0f;
-	points.push_back(v);
-
-	addShape(GL_TRIANGLES, points);
-
-	// add axis
-	points.clear();
-
-	v.location[0] = -20.0f; v.location[1] = 0.0f; v.location[2] = 0.0f;
-	v.color[0] = 0.0f; v.color[1] = 0.0f; v.color[2] = 0.0f;
-	points.push_back(v);
-	v.location[0] = 20.0f; v.location[1] = 0.0f; v.location[2] = 0.0f;
-	points.push_back(v);
-	v.location[0] = 0.0f; v.location[1] = -20.0f; v.location[2] = 0.0f;
-	points.push_back(v);
-	v.location[0] = 0.0f; v.location[1] = 20.0f; v.location[2] = 0.0f;
-	points.push_back(v);
-	v.location[0] = 0.0f; v.location[1] = 0.0f; v.location[2] = -20.0f;
-	points.push_back(v);
-	v.location[0] = 0.0f; v.location[1] = 0.0f; v.location[2] = 20.0f;
-	points.push_back(v);
-
-	addShape(GL_LINES, points);
 }
 
 void RenderManager::addShape(GLenum mode, std::vector<Vertex> &points) {
@@ -85,5 +44,8 @@ void RenderManager::addShape(GLenum mode, std::vector<Vertex> &points) {
  
     glEnableVertexAttribArray(colorLoc);
     glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, color));
+
+    glEnableVertexAttribArray(normalLoc);
+    glVertexAttribPointer(normalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normal));
 }
 

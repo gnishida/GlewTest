@@ -1,7 +1,10 @@
 ﻿#include "GLWidget3D.h"
 #include "MainWindow.h"
 #include <QVector2D>
+#include <QColor>
 #include <iostream>
+#include "Sphere.h"
+#include "Cube.h"
 
 GLWidget3D::GLWidget3D(MainWindow* mainWin) : QGLWidget(QGLFormat(QGL::SampleBuffers), (QWidget*)mainWin) {
 	this->mainWin = mainWin;
@@ -91,7 +94,7 @@ void GLWidget3D::initializeGL() {
 	//glPointSize(10.0f);
 
 	renderManager.init();
-	renderManager.setup();
+	setupScene();
 	updateCamera();
 }
 
@@ -183,4 +186,13 @@ void GLWidget3D::updateCamera() {
     // must be called after glUseProgram
     glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "projMatrix"),  1, false, projMatrix);
     glUniformMatrix4fv(glGetUniformLocation(renderManager.program, "viewMatrix"),  1, false, viewMatrix);
+}
+
+void GLWidget3D::setupScene() {
+	Cube cube(20, 20, 20, QColor(255, 0, 0));
+	cube.translate(30, 0, 0);
+	renderManager.addShape(GL_QUADS, cube.verts);
+
+	Sphere sphere(20, QColor(0, 0, 255), 20, 20);
+	renderManager.addShape(GL_TRIANGLES, sphere.verts);
 }

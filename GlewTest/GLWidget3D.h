@@ -67,6 +67,7 @@ protected:
 
 private:
 	void updateCamera();
+	void setupScene();
 
 };
 

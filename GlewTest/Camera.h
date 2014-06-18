@@ -5,7 +5,9 @@
 #include <QVector4D>
 #include <QMatrix4x4>
 
+#ifndef M_PI
 #define M_PI 3.141592653589
+#endif
 
 class Camera {
 public:
@@ -27,7 +29,7 @@ public:
 		zrot = 0.0f;//-45.0;
 
 		//pos = QVector3D(10, 2, 10);
-		pos = QVector3D(0, 2, 20);
+		pos = QVector3D(0, 0, 100);
 		lookAt = QVector3D(0, 0, 0);
 
 		fov = 53.13f;
@@ -142,7 +144,7 @@ public:
 
 	void resetCamera(){
 		setLookAt(0.0f, 0.0f, 0.0f);
-		setTranslation(0.0f, 0.0f, 100.0f);
+		setTranslation(100.0f, 100.0f, 100.0f);
 	}
 };
 

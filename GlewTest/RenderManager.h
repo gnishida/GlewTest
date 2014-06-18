@@ -26,13 +26,13 @@ public:
 
 	GLuint vertexLoc;
 	GLuint colorLoc;
+	GLuint normalLoc;
 
 public:
 	RenderManager() {}
 
 	uint init();
 	void render();
-	void setup();
 	void addShape(GLenum mode, std::vector<Vertex> &points);
 };
 
