@@ -4,6 +4,7 @@
 #include "ShaderInterface.h"
 #include <QVector3D>
 #include <QMatrix4x4>
+#include <QGLWidget>
 
 typedef struct {
 	float location[3];
@@ -14,7 +15,9 @@ typedef struct {
 } Vertex;
 
 typedef struct {
-	GLenum mode;
+	int shaderMode;
+	int texId;
+	GLenum geometryType;
 	int count;
 	uint vao;
 } VAOShape;
@@ -25,14 +28,18 @@ public:
 	std::vector<VAOShape> vao_list;
 
 	GLuint vertexLoc;
-	GLuint colorLoc;
+	GLuint texLoc;
 	GLuint normalLoc;
+	GLuint colorLoc;
+
+	QHash<QString, GLuint> nameToTexId;
 
 public:
 	RenderManager() {}
 
 	uint init();
 	void render();
-	void addShape(GLenum mode, std::vector<Vertex> &points);
+	void addShape(GLenum geometryType, std::vector<Vertex> &points);
+	uint loadTexture(QGLWidget* glWidget, QString filename);
 };
 
